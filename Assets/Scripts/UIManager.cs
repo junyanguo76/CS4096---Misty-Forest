@@ -17,11 +17,9 @@ public class UIManager : MonoBehaviour
     public Image skillC;
 
 
-    public TextMeshProUGUI NameH;
-    public TextMeshProUGUI HPH;
-    public TextMeshProUGUI SpeedH;
-    public TextMeshProUGUI Defence;
-    public TextMeshProUGUI Status;
+    public TextMeshProUGUI heroInfo;
+    public TextMeshProUGUI monsterInfo;
+
 
 
 
@@ -29,7 +27,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-        NameH.text = "knight" ;
+
     }
 
     // Update is called once per frame
@@ -43,20 +41,37 @@ public class UIManager : MonoBehaviour
         switch (character.characterType)
         {
             case Character.CharacterType.Hero:
+                int temp = 0;
                 switch (character.characterName)
                 {
-                    case Character.CharacterName.KnightM:
-                        skillA.sprite = skillAList[0];
-                        skillB.sprite = skillBList[0];
-                        skillC.sprite = skillCList[0];
+                    case Character.CharacterName.Knight:
                     break;
-                    case Character.CharacterName.KnightF:
-                        skillA.sprite = skillAList[1];
-                        skillB.sprite = skillBList[1];
-                        skillC.sprite = skillCList[1];
+                    case Character.CharacterName.Assassin:
+                        temp++;
+                        break;
+                    case Character.CharacterName.Warrior:
+                        temp += 2;
+                        break;
+                    case Character.CharacterName.Wizard:
+                        temp += 3;
                         break;
                 }
+                skillA.sprite = skillAList[temp];
+                skillB.sprite = skillBList[temp];
+                skillC.sprite = skillCList[temp];
+
+                heroInfo.text = character.name + "\nHP: " + character.HP
+                    + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
+                    + "\nStatus: " + character.Status;
+
                 break;
+
+            case Character.CharacterType.Monster:
+                monsterInfo.text = character.name + "\nHP: " + character.HP
+                    + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
+                    + "\nStatus: " + character.Status;
+                break;
+
         }
     }
 }
