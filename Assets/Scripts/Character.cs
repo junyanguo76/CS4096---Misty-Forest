@@ -14,31 +14,62 @@ public class Character : MonoBehaviour
     public int MaxHP { get; set; }
     public int Speed { get; set; }
     public float Defense { get; set; }
+    public bool HasMoved { get; set; }
+    public bool SkillSettled { get; set; }
     public StatusList Status { get; set; }
-    Skill SkillA { get; set; }
-    Skill SkillB { get; set; }
-    Skill SkillC { get; set; }
+    public Skill SkillA { get; set; }
+    public Skill SkillB { get; set; }
+    public Skill SkillC { get; set; }
+    public Skill SelectedSkill;
+    
 
-
-    List<Skill> SkillList { get; set; } = new List<Skill>();
-    void PerformingSkill(Skill skill, Character character)
+    public List<Skill> SkillList  = new List<Skill>();
+    
+    public void PerformingSkill(Skill skill, Character character)
     {
         skill.SkillEffect(character);
     }
+    public void Die()
+    {
+        Destroy(this.gameObject);
 
+    }
 
     private void OnMouseDown()
     {
         UIManager.Instance.ChangeCharacterInfo(this);
+        if (characterType == CharacterType.Hero && SkillSettled == false)
+        {
+            Battle.instance.SelectedCharacter = this;
+            Debug.Log("You select this character" + this.name);
+        }
+        else if(characterType == CharacterType.Monster)
+        {
+            Battle.instance.SelectedCharacter.SelectedSkill.targetCharacter = this;
+            Debug.Log("Your skill points to this monster" + this.name);
+            Battle.instance.SelectedCharacter.SkillSettled = true;
+        }
+
+
+
+        //if(Battle.instance.userSelectedSkill != null)
+        //{
+        //    PerformingSkill(Battle.instance.userSelectedSkill, this);
+        //}
+        
     }
     public void Start()
     {
         SkillA = new Skill();
         SkillB = new Skill();
         SkillC = new Skill();
-
+        SkillList.Add(SkillA);
+        SkillList.Add(SkillB);
+        SkillList.Add(SkillC);
 
         Status = StatusList.Normal;
+        HasMoved = false;
+        SkillSettled = false;
         switch (characterName)
         {
             case CharacterName.Knight:
@@ -53,12 +84,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
 
@@ -75,12 +106,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
 
@@ -96,12 +127,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
 
@@ -117,12 +148,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
             case CharacterName.Mushroom:
@@ -137,12 +168,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
             case CharacterName.Skeleton:
@@ -157,12 +188,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
 
@@ -178,12 +209,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
 
@@ -199,12 +230,12 @@ public class Character : MonoBehaviour
                 SkillA.Status = StatusList.IncreaseDefense;
 
                 SkillB.Name = "Chop";
-                SkillA.Damage = 2;
-                SkillA.Status = StatusList.Stone;
+                SkillB.Damage = 2;
+                SkillB.Status = StatusList.Stone;
 
                 SkillC.Name = "Punches";
-                SkillA.Damage = 6;
-                SkillA.Status = StatusList.Normal;
+                SkillC.Damage = 6;
+                SkillC.Status = StatusList.Normal;
                 break;
 
         }

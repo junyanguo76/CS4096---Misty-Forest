@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     public Image skillC;
 
 
+    public List<Skill> SkillList = new List<Skill>();
+
     public TextMeshProUGUI heroInfo;
     public TextMeshProUGUI monsterInfo;
 
@@ -60,18 +62,33 @@ public class UIManager : MonoBehaviour
                 skillB.sprite = skillBList[temp];
                 skillC.sprite = skillCList[temp];
 
-                heroInfo.text = character.name + "\nHP: " + character.HP
+                heroInfo.text = character.name + "\nHP: " + character.HP + "/" +character.MaxHP
                     + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
                     + "\nStatus: " + character.Status;
+                SkillList = character.SkillList;
 
                 break;
 
             case Character.CharacterType.Monster:
-                monsterInfo.text = character.name + "\nHP: " + character.HP
+                monsterInfo.text = character.name + "\nHP: " + character.HP + "/" + character.MaxHP
                     + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
                     + "\nStatus: " + character.Status;
                 break;
 
         }
     }
+
+    public void PressSkillA()
+    {
+        Battle.instance.SelectedCharacter.SelectedSkill = SkillList[0];
+    }
+    public void PressSkillB()
+    {
+        Battle.instance.SelectedCharacter.SelectedSkill = SkillList[1];
+    }
+    public void PressSkillC()
+    {
+        Battle.instance.SelectedCharacter.SelectedSkill = SkillList[2];
+    }
+
 }
