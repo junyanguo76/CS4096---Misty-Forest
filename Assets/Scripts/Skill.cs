@@ -7,6 +7,7 @@ public class Skill : MonoBehaviour
     public string Name { get; set; }
     public StatusList Status { get; set; }
     public Character targetCharacter;
+    public enum SkillType { Normal,BuffSkill,DebuffSkill}
     public void SkillEffect(Character targetCharacter)
     {
         targetCharacter.HP -= Damage;

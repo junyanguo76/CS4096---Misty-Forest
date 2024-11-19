@@ -346,6 +346,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 2
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!95 &151002599
 Animator:
   serializedVersion: 5
@@ -471,6 +473,7 @@ GameObject:
   - component: {fileID: 537506796}
   - component: {fileID: 537506799}
   - component: {fileID: 537506798}
+  - component: {fileID: 537506800}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -559,6 +562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 4
   characterType: 1
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &537506799
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -604,6 +609,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.20656884, y: 0.3534628}
   m_EdgeRadius: 0
+--- !u!95 &537506800
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537506795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 643a79beb0b84554792b3b69a5fc73b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &622168115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,6 +1572,7 @@ GameObject:
   - component: {fileID: 1140796843}
   - component: {fileID: 1140796846}
   - component: {fileID: 1140796845}
+  - component: {fileID: 1140796847}
   m_Layer: 0
   m_Name: Flying eye
   m_TagString: Untagged
@@ -1634,6 +1661,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 7
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &1140796846
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1679,6 +1708,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27071887, y: 0.54904675}
   m_EdgeRadius: 0
+--- !u!95 &1140796847
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140796842}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d2bba7cfa3ee6d140af53e9db90a8124, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1156731653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,6 +2089,7 @@ GameObject:
   - component: {fileID: 1458608839}
   - component: {fileID: 1458608842}
   - component: {fileID: 1458608841}
+  - component: {fileID: 1458608843}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -2127,6 +2178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 6
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &1458608842
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2172,6 +2225,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.26086575, y: 0.43607122}
   m_EdgeRadius: 0
+--- !u!95 &1458608843
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458608838}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ded9f78538eefa54c83dadca1f49fed3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1534368480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2273,6 +2347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 0
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &1534368484
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2427,6 +2503,7 @@ GameObject:
   - component: {fileID: 1633446173}
   - component: {fileID: 1633446176}
   - component: {fileID: 1633446175}
+  - component: {fileID: 1633446177}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -2515,6 +2592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 5
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &1633446176
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2560,6 +2639,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3661086, y: 0.54190576}
   m_EdgeRadius: 0
+--- !u!95 &1633446177
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633446172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c4ba7c1e51d0d8448b0066ff5fd7651a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1685807554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,6 +2761,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 1
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!61 &1685807558
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2873,6 +2975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 3
   characterType: 0
+  SelectedSkill: {fileID: 0}
+  SkillList: []
 --- !u!95 &1718477021
 Animator:
   serializedVersion: 5
@@ -3160,8 +3264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroList: []
   monsterList: []
-  userSelectedSkill: {fileID: 0}
-  AISelectedSkill: {fileID: 0}
+  characterList: []
   SelectedCharacter: {fileID: 0}
 --- !u!4 &2054250121
 Transform:
