@@ -86,6 +86,7 @@ public class Character : MonoBehaviour
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
                 SkillA.status.statusType = Status.StatusList.Healing;
+                SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;

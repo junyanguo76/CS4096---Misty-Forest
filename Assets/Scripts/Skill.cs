@@ -9,6 +9,7 @@ public class Skill : MonoBehaviour
     public Status status = new Status();
     public Character targetCharacter;
     public enum SkillType { Normal,BuffSkill,DebuffSkill}
+    public SkillType skillType;
     public void SkillEffect(Character targetCharacter)
     {
         targetCharacter.HP -= (int)(Damage * (10 - targetCharacter.Defense)/10);
