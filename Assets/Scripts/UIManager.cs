@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.TextCore.Text;
 
 public class UIManager : MonoBehaviour
 {
@@ -22,24 +23,23 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI heroInfo;
     public TextMeshProUGUI monsterInfo;
 
+    private string CharacterStatusList;
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Instance = this;
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ChangeCharacterInfo(Character character)
     {
+        foreach (Status status in character.StatusList)
+        {
+            CharacterStatusList = null;
+            CharacterStatusList += status.statusType +" ";
+        }
+        if (character.StatusList.Count == 0) CharacterStatusList = "Normal";
         switch (character.characterType)
         {
             case Character.CharacterType.Hero:
@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
 
                 heroInfo.text = character.name + "\nHP: " + character.HP + "/" +character.MaxHP
                     + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
-                    + "\nStatus: " + character.Status;
+                    + "\nStatus: " + CharacterStatusList;
                 SkillList = character.SkillList;
 
                 break;
@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
             case Character.CharacterType.Monster:
                 monsterInfo.text = character.name + "\nHP: " + character.HP + "/" + character.MaxHP
                     + "\nSpeed: " + character.Speed + "\nDefense: " + character.Defense
-                    + "\nStatus: " + character.Status;
+                    + "\nStatus: " + CharacterStatusList;
                 break;
 
         }

@@ -1,17 +1,23 @@
 using UnityEngine;
-using static Battle;
+
 
 public class Skill : MonoBehaviour
 {
     public int Damage { get; set; }
+    public int OrignalDamage { get; set; }
     public string Name { get; set; }
-    public StatusList Status { get; set; }
+    public Status status = new Status();
     public Character targetCharacter;
     public enum SkillType { Normal,BuffSkill,DebuffSkill}
     public void SkillEffect(Character targetCharacter)
     {
-        targetCharacter.HP -= Damage;
-        targetCharacter.Status = Status;
+        targetCharacter.HP -= (int)(Damage * (10 - targetCharacter.Defense)/10);
+        targetCharacter.StatusList.Add(this.status);
+        Battle.instance.BuffCheck(targetCharacter);
     }
 
+    private void Start()
+    {
+        OrignalDamage = Damage;
+    }
 }
