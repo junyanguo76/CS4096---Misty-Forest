@@ -7,7 +7,7 @@ public class Status : MonoBehaviour
      public enum StatusList
     {
          Healing, Bleeding, DecreaseDefence, IncreaseDefense,
-        IncreaseAttack, DecreaseAttack
+        IncreaseAttack, DecreaseAttack,IncreaseSpeed,DecreaseSpeed,Normal
     };
     public StatusList statusType;
     public int lastTime = 3;

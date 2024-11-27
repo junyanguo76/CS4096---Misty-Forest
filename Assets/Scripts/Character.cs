@@ -17,8 +17,8 @@ public class Character : MonoBehaviour
     public int MaxHP { get; set; }
     public int OrinalSpeed;
     public int Speed { get; set; }
-    public float OrignalDefense;
-    public float Defense { get; set; }
+    public int OrignalDefense;
+    public int Defense { get; set; }
     public bool HasMoved { get; set; }
     public bool SkillSettled { get; set; }
     public Skill SkillA { get; set; }
@@ -85,16 +85,17 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-                SkillA.status.statusType = Status.StatusList.Healing;
+                SkillA.status.statusType = Status.StatusList.IncreaseDefense;
                 SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.status.statusType = Status.StatusList.DecreaseDefence;
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
@@ -108,15 +109,17 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.IncreaseSpeed;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.DecreaseSpeed;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
@@ -129,15 +132,17 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.IncreaseAttack;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.DecreaseAttack;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
@@ -150,16 +155,20 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.Healing;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.Bleeding;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
+
+                
 
             case CharacterName.Mushroom:
                 HP = 20;
@@ -170,15 +179,15 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
             case CharacterName.Skeleton:
@@ -190,15 +199,15 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
@@ -211,15 +220,15 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
@@ -232,15 +241,15 @@ public class Character : MonoBehaviour
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
-
+                SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
                 SkillB.Damage = 2;
-                
+                SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;
-
+                SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
         }
@@ -255,5 +264,6 @@ public class Character : MonoBehaviour
         }
         OrinalSpeed = Speed;
         OrignalDefense = Defense;
+        SkillList.Find(skill => skill.skillType == Skill.SkillType.Normal).status.statusType = Status.StatusList.Normal;
     }
 }

@@ -34,10 +34,13 @@ public class UIManager : MonoBehaviour
 
     public void ChangeCharacterInfo(Character character)
     {
+        CharacterStatusList = null;
         foreach (Status status in character.StatusList)
         {
-            CharacterStatusList = null;
-            CharacterStatusList += status.statusType +" ";
+            if(status.statusType != Status.StatusList.Normal)
+            {
+                CharacterStatusList += status.statusType + " ";
+            }
         }
         if (character.StatusList.Count == 0) CharacterStatusList = "Normal";
         switch (character.characterType)

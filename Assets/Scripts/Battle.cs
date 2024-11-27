@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ using UnityEngine.UIElements.Experimental;
 public class Battle : MonoBehaviour
 {
     public static Battle instance;
-    public enum AIStrategyList { Attack,Defense}
+    public enum AIStrategyList { Attack,Defense,Flee}
     AIStrategyList AIStrategy;
 
     public List<Character> heroList = new List<Character>();
@@ -105,6 +106,14 @@ public class Battle : MonoBehaviour
         {
             character.Defense = character.OrignalDefense - 2;
         }
+        else if (character.StatusList.Find(status => status.statusType == Status.StatusList.IncreaseSpeed))
+        {
+            character.Speed = character.OrinalSpeed + 3;
+        }
+        else if (character.StatusList.Find(status => status.statusType == Status.StatusList.DecreaseSpeed))
+        {
+            character.Speed = character.OrinalSpeed - 3;
+        }
     }
     public void BuffCheck(Character character)
     {
@@ -130,12 +139,98 @@ public class Battle : MonoBehaviour
         {
             character.Defense = character.OrignalDefense - 2;
         }
+        else if (character.StatusList.Find(status => status.statusType == Status.StatusList.IncreaseSpeed))
+        {
+            character.Speed = character.OrinalSpeed + 3;
+        }
+        else if (character.StatusList.Find(status => status.statusType == Status.StatusList.DecreaseSpeed))
+        {
+            character.Speed = character.OrinalSpeed - 3;
+        }
     }
     private Skill AISkillSelecting(Character character)
     {
+        switch (AIStrategy)
+        {
+            case AIStrategyList.Attack:
+                float temp;
+                temp = Random.Range(0, 2);
+                if(temp > 1)
+                {
+                    character.SelectedSkill = character.SkillList.Find(skill => skill.skillType == Skill.SkillType.Normal);
+                }
+                else
+                {
+                    character.SelectedSkill = character.SkillList.Find(skill => skill.skillType == Skill.SkillType.DebuffSkill);
+                }
+                 break;
+
+            case AIStrategyList.Defense:
+                character.SelectedSkill = character.SkillList.Find(skill => skill.skillType == Skill.SkillType.BuffSkill);
+                break;
+        }
         character.SelectedSkill = character.SkillB;
         character.SelectedSkill.targetCharacter = character;
         return character.SelectedSkill;
+    }
+    private void AITargetSelecting(Skill skill)
+    {
+        float temp = Random.Range(0, 10); ;
+        switch (skill.skillType)
+        {
+            case Skill.SkillType.Normal:
+                if(temp > 8)
+                {
+                    int minHP = heroList.Min(hero => hero.HP);
+                    skill.targetCharacter = heroList.Find(hero => hero.HP == minHP);
+                    break;
+                }
+                else if(temp < 1)
+                {
+                    int minDenfesce = heroList.Min(hero => hero.Defense);
+                    skill.targetCharacter = heroList.Find(hero => hero.Defense == minDenfesce);
+                    break;
+                }
+                else
+                {
+                    skill.targetCharacter = heroList[Random.Range(0, heroList.Count)];
+                }
+                break;
+
+            case Skill.SkillType.DebuffSkill:
+                if (temp > 8)
+                {
+                    int minHP = heroList.Min(hero => hero.HP);
+                    skill.targetCharacter = heroList.Find(hero => hero.HP == minHP);
+                    break;
+                }
+                else if (temp < 1)
+                {
+                    int maxDenfesce = heroList.Max(hero => hero.Defense);
+                    skill.targetCharacter = heroList.Find(hero => hero.Defense == maxDenfesce);
+                    break;
+                }
+                else
+                {
+                    skill.targetCharacter = heroList[Random.Range(0, heroList.Count)];
+                }
+                break;
+
+            case Skill.SkillType.BuffSkill:
+                if (skill.status.statusType == Status.StatusList.Healing)
+                {
+                    int minHP = monsterList.Min(monster => monster.HP);
+                    skill.targetCharacter = monsterList.Find(monster => monster.HP == minHP);
+                    break;
+                }
+                else
+                {
+                    skill.targetCharacter = monsterList[Random.Range(0, monsterList.Count)];
+                }
+                break;
+
+
+        }
     }
     private void ChangeStrategy(int n)
     {
@@ -146,6 +241,11 @@ public class Battle : MonoBehaviour
             Debug.Log("After some thought, the monsters decided to change their strategy.");
         }
         Debug.Log("After some thought, the monsters decided to maintain their current strategy.");
+    }
+    private void Flee()
+    {
+        Debug.Log("Your enemy feel death is approaching, they want to run for their lives");
+
     }
     private void AIStrategySelecting()
     {
@@ -181,6 +281,12 @@ public class Battle : MonoBehaviour
         {
             AIStrategy = AIStrategyList.Attack;
         }
+        else if(proportion > 3)
+        {
+            float temp;
+            temp = Random.Range(0, 2);
+            if (temp > 0) AIStrategy = AIStrategyList.Flee;
+        }
     }
     IEnumerator ShowTheFirstCharacterInfo()
     {
@@ -194,6 +300,8 @@ public class Battle : MonoBehaviour
     IEnumerator StartBattle()
     {
         SpeedSorting();
+        AIStrategySelecting();
+
         foreach(Character character in characterList)
         {
             StatusCheck(character);
@@ -209,8 +317,10 @@ public class Battle : MonoBehaviour
             }
             else
             {
-                character.PerformingSkill(AISkillSelecting(character), AISkillSelecting(character).targetCharacter);
-                AliveJudgement(character.SelectedSkill.targetCharacter);
+                Skill AISelectedSkill = AISkillSelecting(character);
+                AITargetSelecting(AISelectedSkill);
+                character.PerformingSkill(AISelectedSkill, AISelectedSkill.targetCharacter);
+                AliveJudgement(AISelectedSkill.targetCharacter);
             }
             yield return new WaitForSeconds(1f);
         }
