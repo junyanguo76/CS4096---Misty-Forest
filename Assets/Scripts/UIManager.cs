@@ -42,7 +42,12 @@ public class UIManager : MonoBehaviour
                 CharacterStatusList += status.statusType + " ";
             }
         }
-        if (character.StatusList.Count == 0) CharacterStatusList = "Normal";
+        bool haveStatus = new bool();
+        foreach (Status status in character.StatusList)
+        {
+            if(status.statusType != Status.StatusList.Normal) haveStatus = true;
+        }
+        if (haveStatus == false) CharacterStatusList = "Normal";
         switch (character.characterType)
         {
             case Character.CharacterType.Hero:
@@ -84,14 +89,17 @@ public class UIManager : MonoBehaviour
     public void PressSkillA()
     {
         Battle.instance.SelectedCharacter.SelectedSkill = SkillList[0];
+        Battle.instance.SelectedCharacter.skillSelected = true;
     }
     public void PressSkillB()
     {
         Battle.instance.SelectedCharacter.SelectedSkill = SkillList[1];
+        Battle.instance.SelectedCharacter.skillSelected = true;
     }
     public void PressSkillC()
     {
         Battle.instance.SelectedCharacter.SelectedSkill = SkillList[2];
+        Battle.instance.SelectedCharacter.skillSelected = true;
     }
 
 }

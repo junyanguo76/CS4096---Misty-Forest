@@ -20,7 +20,8 @@ public class Character : MonoBehaviour
     public int OrignalDefense;
     public int Defense { get; set; }
     public bool HasMoved { get; set; }
-    public bool SkillSettled { get; set; }
+    public bool SkillSettled;
+    public bool skillSelected;
     public Skill SkillA { get; set; }
     public Skill SkillB { get; set; }
     public Skill SkillC { get; set; }
@@ -42,10 +43,32 @@ public class Character : MonoBehaviour
     private void OnMouseDown()
     {
         UIManager.Instance.ChangeCharacterInfo(this);
-        if (characterType == CharacterType.Hero && SkillSettled == false)
+
+        if (characterType == CharacterType.Hero)
         {
-            Battle.instance.SelectedCharacter = this;
-            Debug.Log("You select this character" + this.name);
+           if(Battle.instance.SelectedCharacter == null)
+              {
+               Battle.instance.SelectedCharacter = this;
+              }
+           else if(instance.SelectedCharacter != null && Battle.instance.SelectedCharacter != this)
+            {
+                Battle.instance.SelectedCharacter.skillSelected = false;
+            }
+
+           if((Battle.instance.SelectedCharacter.skillSelected == true) && (Battle.instance.SelectedCharacter.SkillSettled) == false &&
+            (Battle.instance.SelectedCharacter.SelectedSkill.skillType == Skill.SkillType.BuffSkill))
+            {
+                Battle.instance.SelectedCharacter.SelectedSkill.targetCharacter = this;
+                Battle.instance.SelectedCharacter.SkillSettled = true;
+                Debug.Log("You use buff skill on this character" + this.name);
+            }
+
+           if(SkillSettled == false)
+            {
+                Battle.instance.SelectedCharacter = this;
+                Debug.Log("You select this character" + this.name);
+            }
+            
         }
         else if(characterType == CharacterType.Monster)
         {
@@ -53,14 +76,6 @@ public class Character : MonoBehaviour
                 Debug.Log("Your skill points to this monster" + this.name);
                 Battle.instance.SelectedCharacter.SkillSettled = true;
         }
-
-
-
-        //if(Battle.instance.userSelectedSkill != null)
-        //{
-        //    PerformingSkill(Battle.instance.userSelectedSkill, this);
-        //}
-        
     }
 
 
@@ -89,7 +104,7 @@ public class Character : MonoBehaviour
                 SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.status.statusType = Status.StatusList.DecreaseDefence;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
 
@@ -113,20 +128,20 @@ public class Character : MonoBehaviour
                 SkillA.status.statusType = Status.StatusList.IncreaseSpeed;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
                 SkillB.status.statusType = Status.StatusList.DecreaseSpeed;
 
                 SkillC.Name = "Punches";
-                SkillC.Damage = 6;
+                SkillC.Damage = 8;
                 SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
             case CharacterName.Warrior:
-                HP = 20;
-                MaxHP = 20;
-                Speed = 8;
+                HP = 18;
+                MaxHP = 18;
+                Speed = 6;
                 Defense = 0;
                 characterType = CharacterType.Hero;
 
@@ -136,20 +151,20 @@ public class Character : MonoBehaviour
                 SkillA.status.statusType = Status.StatusList.IncreaseAttack;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
                 SkillB.status.statusType = Status.StatusList.DecreaseAttack;
 
                 SkillC.Name = "Punches";
-                SkillC.Damage = 6;
+                SkillC.Damage = 5;
                 SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
             case CharacterName.Wizard:
-                HP = 20;
-                MaxHP = 20;
-                Speed = 8;
+                HP = 18;
+                MaxHP = 18;
+                Speed = 6;
                 Defense = 0;
                 characterType = CharacterType.Hero;
 
@@ -159,7 +174,7 @@ public class Character : MonoBehaviour
                 SkillA.status.statusType = Status.StatusList.Healing;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
                 SkillB.status.statusType = Status.StatusList.Bleeding;
 
@@ -171,18 +186,20 @@ public class Character : MonoBehaviour
                 
 
             case CharacterName.Mushroom:
-                HP = 20;
-                MaxHP = 20;
-                Speed = 8;
-                Defense = 0;
+                HP = 24;
+                MaxHP = 24;
+                Speed = 5;
+                Defense = 4;
                 characterType = CharacterType.Monster;
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
+                SkillA.status.statusType = Status.StatusList.IncreaseDefense;
                 SkillA.skillType = Skill.SkillType.BuffSkill;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
+                SkillB.status.statusType = Status.StatusList.DecreaseDefence;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
 
                 SkillC.Name = "Punches";
@@ -194,58 +211,64 @@ public class Character : MonoBehaviour
                 HP = 20;
                 MaxHP = 20;
                 Speed = 8;
-                Defense = 0;
+                Defense = 2;
                 characterType = CharacterType.Monster;
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
                 SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.IncreaseSpeed;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.DecreaseSpeed;
 
                 SkillC.Name = "Punches";
-                SkillC.Damage = 6;
+                SkillC.Damage = 8;
                 SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
             case CharacterName.Goblin:
-                HP = 20;
-                MaxHP = 20;
-                Speed = 8;
+                HP = 18;
+                MaxHP = 18;
+                Speed = 6;
                 Defense = 0;
                 characterType = CharacterType.Monster;
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
                 SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.IncreaseAttack;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.DecreaseAttack;
 
                 SkillC.Name = "Punches";
-                SkillC.Damage = 6;
+                SkillC.Damage = 5;
                 SkillC.skillType = Skill.SkillType.Normal;
                 break;
 
 
             case CharacterName.Flyeye:
-                HP = 20;
-                MaxHP = 20;
-                Speed = 8;
+                HP = 18;
+                MaxHP = 18;
+                Speed = 6;
                 Defense = 0;
                 characterType = CharacterType.Monster;
 
                 SkillA.Name = "Oorah";
                 SkillA.Damage = 0;
                 SkillA.skillType = Skill.SkillType.BuffSkill;
+                SkillA.status.statusType = Status.StatusList.Healing;
 
                 SkillB.Name = "Chop";
-                SkillB.Damage = 2;
+                SkillB.Damage = 0;
                 SkillB.skillType = Skill.SkillType.DebuffSkill;
+                SkillB.status.statusType = Status.StatusList.Bleeding;
 
                 SkillC.Name = "Punches";
                 SkillC.Damage = 6;

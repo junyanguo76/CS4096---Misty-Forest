@@ -6,6 +6,7 @@ using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
+using DG.Tweening;
 public class Battle : MonoBehaviour
 {
     public static Battle instance;
@@ -306,12 +307,13 @@ public class Battle : MonoBehaviour
         {
             StatusCheck(character);
             StatusTimer(character);
+            StartCoroutine(DoAttack(character));
             if (character.characterType == Character.CharacterType.Hero)
             {
                 character.PerformingSkill(character.SelectedSkill, character.SelectedSkill.targetCharacter);
                 UIManager.Instance.ChangeCharacterInfo(character);
                 UIManager.Instance.ChangeCharacterInfo(character.SelectedSkill.targetCharacter);
-                AliveJudgement(character.SelectedSkill.targetCharacter);
+                StartCoroutine(DoFade(character.SelectedSkill.targetCharacter));
                 character.SkillSettled = false;
                 character.SelectedSkill = null;
             }
@@ -320,10 +322,37 @@ public class Battle : MonoBehaviour
                 Skill AISelectedSkill = AISkillSelecting(character);
                 AITargetSelecting(AISelectedSkill);
                 character.PerformingSkill(AISelectedSkill, AISelectedSkill.targetCharacter);
+                StartCoroutine(DoFade(AISelectedSkill.targetCharacter));
                 AliveJudgement(AISelectedSkill.targetCharacter);
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
-        
+    }
+
+    IEnumerator DoAttack(Character character)
+    {
+        character.GetComponentInParent<Animator>().SetBool("Attack", true);
+        yield return new WaitForSeconds(1.5f);
+        character.GetComponentInParent<Animator>().SetBool("Attack", false);
+    }
+    IEnumerator DoFade(Character character)
+    {
+        yield return new WaitForSeconds(1f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(0.3f, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(1, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(0.3f, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(1, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(0.3f, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(1, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(0.3f, 0.4f);
+        yield return new WaitForSeconds(0.2f);
+        character.GetComponentInParent<SpriteRenderer>().DOFade(1, 0.4f);
+        yield return new WaitForSeconds(0.2f);
     }
 }
